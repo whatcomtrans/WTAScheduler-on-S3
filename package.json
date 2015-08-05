@@ -1,0 +1,34 @@
+{
+  "name": "WTAScheduler-on-S3",
+  "version": "0.0.2",
+  "description": "Uses AWS Lambda to push GitHub repo content to S3 in response to commit and release events from GitHub webhooks.",
+  "main": "index.js",
+  "dependencies": {
+    "adm-zip": "^0.4.7",
+    "async": "^1.4.0",
+    "request": "^2.60.0",
+    "uglify-js": "^2.4.24",
+    "uglifycss": "^0.0.16"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/whatcomtrans/WTAScheduler-on-S3.git"
+  },
+  "keywords": [
+    "aws",
+    "s3",
+    "lambda",
+    "github",
+    "webhooks"
+  ],
+  "author": "Josh Nylander <joshn@ridewta.com> (http://github.com/whatcomtrans/)",
+  "license": "Public Domain",
+  "bugs": {
+    "url": "https://github.com/whatcomtrans/WTAScheduler-on-S3/issues"
+  },
+  "homepage": "https://github.com/whatcomtrans/WTAScheduler-on-S3"
+}
