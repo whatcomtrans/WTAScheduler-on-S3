@@ -23,8 +23,8 @@ config.s3Options = {
   // any other options are passed to new AWS.S3()
   // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
 };
-config.PushBucket = "schedules.ridewta.com";
-config.ReleaseBucket = "testschedules.ridewta.com";
-//config.TestCommitURL = "https://github.com/whatcomtrans/WTA.Scheduler/commit/3bea79c9d8a2adcd40e306dc819580d76d9abfbe";
+config.PushBucket = "testschedules.ridewta.com";
+config.ReleaseBucket = "schedules.ridewta.com";
+config.TestCommitURL = "https://github.com/whatcomtrans/WTA.Scheduler/archive/master.zip";
 
 module.exports = config;

@@ -136,12 +136,13 @@ var pubToS3 = function(zipURL, s3bucket, context) {
 
 var handleGitHubEvents = function(event, context) {
   //console.log('Received event:', JSON.stringify(event, null, 2));
-  event.Records.forEach(function(record) {
+  //event.Records.forEach(function(record) {
       // Kinesis data is base64 encoded so decode here
+      /*var record = event.Records[0];
       payload = new Buffer(record.kinesis.data, 'base64').toString('ascii');
       var githubEvent = JSON.parse(payload);
-      console.log('Decoded payload:', githubEvent);
-
+      //console.log('Decoded payload:', githubEvent);
+*/
       //Need to add code to verify "master" branch
       if (config.TestCommitURL) {
         var commitURL = config.TestCommitURL;
@@ -156,7 +157,7 @@ var handleGitHubEvents = function(event, context) {
       //Call the function
       var s3bucket = config.PushBucket;
       pubToS3(zipURL, s3bucket, context);
-  });
+  //});
 }
 
 exports.handleGitHubEvents = handleGitHubEvents;
