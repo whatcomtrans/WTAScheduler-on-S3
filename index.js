@@ -121,7 +121,10 @@ var pubToS3 = function(zipURL, s3bucket, context) {
       },
       function(path,callback) {
         //upload to S3
-        syncDir(path, s3bucket, s3prefix, callback);
+        s3bucket.forEach(function(bucket) {
+          console.log("S3 Push to " + bucket);
+          syncDir(path, bucket, s3prefix, callback);
+        })
         return;
       }
     ], function(err, results) {
@@ -165,14 +168,14 @@ var handleGitHubEvents = function(event, context) {
   console.log (zipURL);
 
   if (githubEvent.commits.length == 0) {
-    var s3bucket = config.ReleaseBucket;
+    var s3buckets = config.ReleaseBucket;
   } else {
-    var s3bucket = config.PushBucket;
+    var s3buckets = config.PushBucket;
   }
-  console.log (s3bucket);
+  console.log (s3buckets);
 
   //Call the function
-  pubToS3(zipURL, s3bucket, context);
+  pubToS3(zipURL, s3buckets, context);
 }
 
 exports.handleGitHubEvents = handleGitHubEvents;
