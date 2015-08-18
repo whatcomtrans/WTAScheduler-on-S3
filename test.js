@@ -12,5 +12,7 @@ var c = {
   done: function (msg) {console.log("done: " + msg); process.exit();}
 };
 
-var e = {};
-testModule.pubPush(e, c);
+var e = {"Records": [{"action": "published"}]};
+//testModule.pubPush(e, c);
+
+testModule.handleGitHubEvents(e, c)

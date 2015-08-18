@@ -136,28 +136,43 @@ var pubToS3 = function(zipURL, s3bucket, context) {
 
 var handleGitHubEvents = function(event, context) {
   //console.log('Received event:', JSON.stringify(event, null, 2));
-  //event.Records.forEach(function(record) {
+
+  var githubEvent = null;
+  event.Records.forEach(function(record) {
       // Kinesis data is base64 encoded so decode here
-      /*var record = event.Records[0];
+      //var record = event.Records[0];
+      console.log(record);
+      //githubEvent = record;
       payload = new Buffer(record.kinesis.data, 'base64').toString('ascii');
-      var githubEvent = JSON.parse(payload);
-      //console.log('Decoded payload:', githubEvent);
-*/
+      githubEvent = JSON.parse(payload);
+      console.log('Decoded payload:', githubEvent);
       //Need to add code to verify "master" branch
-      if (config.TestCommitURL) {
-        var commitURL = config.TestCommitURL;
-      } else {
-        var commitURL = githubEvent.head_commit.url
-      }
-      console.log (commitURL);
+  });
 
-      var zipURL = commitURL.replace("commit", "zipball");
-      console.log (zipURL);
+  /*The following only runs once no matter how many event records are revieved
+    do to time constraints and cleanup requirements.
 
-      //Call the function
-      var s3bucket = config.PushBucket;
-      pubToS3(zipURL, s3bucket, context);
-  //});
+    The rest of the process uses the values of the last event.
+    */
+
+  if (config.TestCommitURL) {
+    var commitURL = config.TestCommitURL;
+  } else {
+    var commitURL = githubEvent.head_commit.url
+  }
+  //console.log (commitURL);
+  var zipURL = commitURL.replace("commit", "zipball");
+  console.log (zipURL);
+
+  if (githubEvent.commits.length == 0) {
+    var s3bucket = config.ReleaseBucket;
+  } else {
+    var s3bucket = config.PushBucket;
+  }
+  console.log (s3bucket);
+
+  //Call the function
+  pubToS3(zipURL, s3bucket, context);
 }
 
 exports.handleGitHubEvents = handleGitHubEvents;
